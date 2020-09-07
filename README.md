@@ -8,14 +8,14 @@
 
 ## Installation <a name="installation"></a>
 In addition to the standard libraries, following installations will be needed: 
->> plotly
->> nltk
->> flask
->> sklearn
->> sqlalchemy
->> sys
->> re
->> pickle
+1. plotly
+2. nltk
+3. flask
+4. sklearn
+5. sqlalchemy
+6. sys
+7. re
+8 pickle
 
 ## Project Motivation  <a name="motivation"></a>
 The purpose of the project is to build a model for an API that classifies disaster messages. Using the web app an emergency worker can input a new message and get classification results in several categories so to have an idea what kind of help is needed: "water", "shelter", "food", etc.
