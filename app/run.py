@@ -2,7 +2,8 @@ import json
 import plotly
 import pandas as pd
 import nltk
-nltk.download(['punkt','wordnet','averaged_perceptron_tagger'])
+
+nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -18,15 +19,6 @@ app = Flask(__name__)
 
 
 def tokenize(text):
-    """
-       tokenize the textual data
-
-       :param
-       text: text data that will be tokenized
-       :return:
-       list of tokens from the inputted text
-       """
-
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -39,9 +31,7 @@ def tokenize(text):
 
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
-    """Extract the starting verb of a sentence
 
-         """
     def starting_verb(self, text):
         sentence_list = nltk.sent_tokenize(text)
         for sentence in sentence_list:
@@ -76,6 +66,9 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
+    category_names = df.iloc[:, 4:].columns
+    category_boolean = (df.iloc[:, 4:] != 0).sum().values
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -94,6 +87,26 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_boolean
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category",
+                    'tickangle': 35
                 }
             }
         }
