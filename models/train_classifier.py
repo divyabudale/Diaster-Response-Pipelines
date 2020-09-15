@@ -35,6 +35,8 @@ def load_data(database_filepath):
     database_filepath = ''.join(database_filepath)
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table('tbl_disaster_response', con=engine)
+    #convert "related" into binary values column
+    df.loc[df['related'] == 2, 'related'] = 1
     X = df['message']
     Y = df.iloc[:, 4:]
     category_names = list(df.columns[4:])
